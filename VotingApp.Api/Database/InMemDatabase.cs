@@ -6,9 +6,12 @@ namespace VotingApp.Api.Database;
 public static class InMemoryDatabase
 {
   public static List<Poll> GetPollList() {
+    var poll_2 = InMemoryDatabase.GetRandomPoll();
+    poll_2.IsActive = false;
+    
     return new List<Poll>() {
       InMemoryDatabase.GetRandomPoll(), 
-      InMemoryDatabase.GetRandomPoll() 
+      poll_2
     }; 
   }
 

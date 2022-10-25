@@ -18,16 +18,24 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<Poll>> Get()
+    public async Task<IActionResult> Get()
     {
         var polls = await _repository.GetPollList(); 
-        return polls;
+        return Ok(polls);
     }
 
     [HttpGet("{id}")]
-    public async Task<Poll> Get(Guid id) 
+    public async Task<IActionResult> Get(Guid id) 
     {
         var poll = await _repository.Get(id);
-        return poll;
+        return Ok(poll);
+    }
+
+    [HttpGet, Route("active")]
+    public async Task<IActionResult> GetActivePolls() 
+    {
+        var polls = await _repository.GetPollList();
+        var activePolls = polls.Where(p => p.IsActive == true);
+        return Ok(activePolls);
     }
 }
