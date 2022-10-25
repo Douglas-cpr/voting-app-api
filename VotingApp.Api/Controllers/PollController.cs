@@ -1,5 +1,8 @@
+using System.Reflection.Emit;
 using Microsoft.AspNetCore.Mvc;
 using VotingApp.Api.Entities;
+using VotingApp.Api.Database;
+using VotingApp.Api.Repositories;
 
 namespace VotingApp.Api.Controllers;
 
@@ -7,13 +10,24 @@ namespace VotingApp.Api.Controllers;
 [Route("poll")]
 public class WeatherForecastController : ControllerBase
 {
-    public WeatherForecastController() {}
+    private readonly IPollRepository _repository;
+
+    public WeatherForecastController(IPollRepository repository) 
+    {
+        _repository = repository;
+    }
 
     [HttpGet]
-    public async Task<Poll[]> Get()
+    public async Task<List<Poll>> Get()
     {
-        var polls = new Poll[] { };
-        var task = Task.FromResult(polls);
-        return await task;
+        var polls = await _repository.GetPollList(); 
+        return polls;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<Poll> Get(Guid id) 
+    {
+        var poll = await _repository.Get(id);
+        return poll;
     }
 }

@@ -2,7 +2,7 @@ namespace VotingApp.Api.Entities;
 
 public class Option 
 {
-    public string Id { get; set; } = null!;
+    public Guid Id { get; set; }
     public string Description { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
 
