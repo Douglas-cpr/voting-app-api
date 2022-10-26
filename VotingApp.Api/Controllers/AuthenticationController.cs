@@ -6,7 +6,7 @@ using VotingApp.Contracts.Authentication;
 namespace VotingApp.Api.Controllers;
 
 [ApiController]
-[Route("user")]
+[Route("authentication")]
 public class AuthenticationController : ControllerBase
 {
     private readonly IPollRepository _repository;

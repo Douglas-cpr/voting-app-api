@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\VotingApp.Contracts\VotingApp.Contracts.csproj" />
+    <ProjectReference Include="..\VotingApp.Application\VotingApp.Application.csproj" />
+    <ProjectReference Include="..\VotingApp.Domain\VotingApp.Domain.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
