@@ -1,18 +1,15 @@
-using System.Reflection.Emit;
 using Microsoft.AspNetCore.Mvc;
-using VotingApp.Api.Entities;
-using VotingApp.Api.Database;
-using VotingApp.Api.Repositories;
+using VotingApp.Application.Persistence;
 
 namespace VotingApp.Api.Controllers;
 
 [ApiController]
 [Route("poll")]
-public class WeatherForecastController : ControllerBase
+public class PollController : ControllerBase
 {
     private readonly IPollRepository _repository;
 
-    public WeatherForecastController(IPollRepository repository) 
+    public PollController(IPollRepository repository) 
     {
         _repository = repository;
     }
@@ -20,7 +17,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var polls = await _repository.GetPollList(); 
+        var polls = await _repository.Get(); 
         return Ok(polls);
     }
 
@@ -34,7 +31,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet, Route("active")]
     public async Task<IActionResult> GetActivePolls() 
     {
-        var polls = await _repository.GetPollList();
+        var polls = await _repository.Get();
         var activePolls = polls.Where(p => p.IsActive == true);
         return Ok(activePolls);
     }
