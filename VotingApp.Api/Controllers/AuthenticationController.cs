@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using VotingApp.Application.Authentication.Commands;
+using VotingApp.Application.Authentication.Register.Commands;
 using VotingApp.Application.Persistence;
 using VotingApp.Contracts.Authentication;
 
@@ -20,12 +21,19 @@ public class AuthenticationController : ControllerBase
     public async Task<ActionResult> Register(RegisterRequest request) 
     {
       var command = new RegisterCommand(request.username, request.email, request.password);
-      // do someting with command
+      // call handler
       var response = new AuthenticationResponse(request.username, request.email, Guid.NewGuid());
       var res = await Task.FromResult(response);
       return Ok(res);
     }
 
-    // [HttpGet, Route("login")]
-    // public async Task<ActionResult> Login()
+    [HttpPost, Route("authenticate")]
+    public async Task<ActionResult> Authenticate(AuthenticateRequest request)
+    {
+      var command = new AuthenticateCommand(request.email, request.password);
+      // do someting with command
+      var response = new AuthenticationResponse("username", request.email, Guid.NewGuid());
+      var res = await Task.FromResult(response);
+      return Ok(res);
+    }
 }

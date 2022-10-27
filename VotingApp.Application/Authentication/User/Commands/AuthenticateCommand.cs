@@ -2,8 +2,7 @@ using System;
 
 namespace VotingApp.Application.Authentication.Commands;
 
-public record RegisterCommand(
-  string Username, 
-  string Email, 
+public record AuthenticateCommand (
+  string Email,
   string Password
 );
