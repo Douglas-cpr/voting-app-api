@@ -15,24 +15,25 @@ public class PollController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public ActionResult Get()
     {
-        var polls = await _repository.Get(); 
+        var polls = _repository.Get(); 
         return Ok(polls);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(Guid id) 
+    public ActionResult Get(Guid id) 
     {
-        var poll = await _repository.Get(id);
+        var poll = _repository.Get(id);
         return Ok(poll);
     }
 
     [HttpGet, Route("active")]
-    public async Task<IActionResult> GetActivePolls() 
+    public ActionResult GetActivePolls() 
     {
-        var polls = await _repository.Get();
+        var polls = _repository.Get();
         var activePolls = polls.Where(p => p.IsActive == true);
         return Ok(activePolls);
     }
 }
+

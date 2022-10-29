@@ -1,7 +1,7 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VotingApp.Application.Authentication.Commands;
 using VotingApp.Application.Authentication.Register.Commands;
-using VotingApp.Application.Persistence;
 using VotingApp.Contracts.Authentication;
 
 namespace VotingApp.Api.Controllers;
@@ -10,21 +10,20 @@ namespace VotingApp.Api.Controllers;
 [Route("authentication")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IUserRepository _repository;
 
-    public AuthenticationController(IUserRepository repository) 
+  private readonly ISender _sender;
+
+    public AuthenticationController(ISender mediator) 
     {
-        _repository = repository;
+      _sender = mediator;
     }
 
     [HttpPost, Route("register")]
     public async Task<ActionResult> Register(RegisterRequest request) 
     {
       var command = new RegisterCommand(request.username, request.email, request.password);
-      var newUserId = await _repository.Add(command.Username, command.Email, command.Password);
-      var response = new AuthenticationResponse(request.username, request.email, newUserId);
-      var res = await Task.FromResult(response);
-      return Ok(res);
+      var registerResult = await _sender.Send(command);
+      return Ok(registerResult);
     }
 
     [HttpPost, Route("authenticate")]

@@ -5,6 +5,6 @@ namespace VotingApp.Application.Persistence;
 
 public interface IPollRepository
 {
-  Task<List<Poll>> Get(); 
-  Task<Poll> Get(Guid id);
+  List<Poll> Get(); 
+  Poll Get(Guid id);
 }

@@ -1,9 +1,9 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace VotingApp.Application;
+namespace BuberDinner.Application;
 
-public static class DependencyInjection 
+public static class DependencyInjection
 {
   public static IServiceCollection AddApplication(this IServiceCollection services)
   {

@@ -13,17 +13,15 @@ public class PollInMemRepository : IPollRepository
     _db = new InMemoryDatabase();
   }
 
-  public async Task<List<Poll>> Get()
+  public List<Poll> Get()
   {
     var polls = _db.GetPollList();
-    var result = await Task.FromResult(polls);
-    return result;
+    return polls;
   }
 
-  public async Task<Poll> Get(Guid id)
+  public Poll Get(Guid id)
   {
     var poll = _db.GetRandomPoll(id);
-    var result = await Task.FromResult(poll);
-    return result;
+    return poll;
   }
 }

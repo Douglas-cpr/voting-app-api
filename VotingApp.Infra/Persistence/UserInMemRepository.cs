@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using VotingApp.Application.Persistence;
 using VotingApp.Domain.Entities;
 using VotingApp.Infra.Database;
@@ -13,30 +14,27 @@ public class UserInMemRepository : IUserRepository
     _db = new InMemoryDatabase();
   }
 
-  public async Task<List<User>> Get()
+  public List<User> Get()
   {
     var polls = _db.GetUserList();
-    var result = await Task.FromResult(polls);
-    return result;
+    return polls;
   }
 
-  public async Task<User> Get(Guid id)
+  public User? Get(Guid id)
   {
     var poll = _db.GetRandomUser(id);
-    var result = await Task.FromResult(poll);
-    return result;
+    return poll;
   }
 
-  public async Task<Guid> Add(string username, string email, string password)
+  public Guid Add(User user)
   {
-    var newUser = new User() 
-    {
-      Id = Guid.NewGuid(),
-      Username = username,
-      Password = password,
-      Email = email
-    };
-    var result = await Task.FromResult(newUser.Id);
-    return result;
+    return user.Id;
+  }
+
+  public User? GetUserByEmail(string email)
+  {
+    var users = _db.GetUserList();
+    var user = users.FirstOrDefault(u => u.Email == email);
+    return user;
   }
 }

@@ -5,7 +5,8 @@ namespace VotingApp.Application.Persistence;
 
 public interface IUserRepository
 {
-  Task<List<User>> Get(); 
-  Task<User> Get(Guid id);
-  Task<Guid> Add(string username, string email, string password);
+  List<User> Get(); 
+  User? Get(Guid id);
+  User? GetUserByEmail(string email);
+  Guid Add(User user);
 }
