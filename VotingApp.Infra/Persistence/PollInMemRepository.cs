@@ -22,10 +22,7 @@ public class PollInMemRepository : IPollRepository
 
   public async Task<Poll> Get(Guid id)
   {
-    var poll = _db
-      .GetPollList()
-      .Where(p => p.Id == id)
-      .FirstOrDefault();
+    var poll = _db.GetRandomPoll(id);
     var result = await Task.FromResult(poll);
     return result;
   }

@@ -10,9 +10,9 @@ namespace VotingApp.Api.Controllers;
 [Route("authentication")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IPollRepository _repository;
+    private readonly IUserRepository _repository;
 
-    public AuthenticationController(IPollRepository repository) 
+    public AuthenticationController(IUserRepository repository) 
     {
         _repository = repository;
     }
@@ -21,8 +21,8 @@ public class AuthenticationController : ControllerBase
     public async Task<ActionResult> Register(RegisterRequest request) 
     {
       var command = new RegisterCommand(request.username, request.email, request.password);
-      // call handler
-      var response = new AuthenticationResponse(request.username, request.email, Guid.NewGuid());
+      var newUserId = await _repository.Add(command.Username, command.Email, command.Password);
+      var response = new AuthenticationResponse(request.username, request.email, newUserId);
       var res = await Task.FromResult(response);
       return Ok(res);
     }
@@ -31,7 +31,6 @@ public class AuthenticationController : ControllerBase
     public async Task<ActionResult> Authenticate(AuthenticateRequest request)
     {
       var command = new AuthenticateCommand(request.email, request.password);
-      // do someting with command
       var response = new AuthenticationResponse("username", request.email, Guid.NewGuid());
       var res = await Task.FromResult(response);
       return Ok(res);

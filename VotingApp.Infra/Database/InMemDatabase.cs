@@ -4,7 +4,8 @@ namespace VotingApp.Infra.Database;
 
 public class InMemoryDatabase
 {
-  public List<Poll> GetPollList() {
+  public List<Poll> GetPollList() 
+  {
     var poll_2 = GetRandomPoll();
     poll_2.IsActive = false;
     
@@ -38,6 +39,63 @@ public class InMemoryDatabase
         }
       }
     };
-  } 
+  }
+
+  public Poll GetRandomPoll(Guid id) 
+  {
+    return new Poll() {
+      Id = id,
+      IsActive = true,
+      User = new User() {
+        Id = Guid.NewGuid(),
+        Username = "John Doe" + DateTime.Now.ToString(),
+        Email = "John.Doe@gmail.com",
+        Password = "password@gmail.com"
+      },
+      Options = new List<Option>() {
+        new Option {
+          Id = Guid.NewGuid(),
+          Description = "Random Option 1",
+          CreatedAt = DateTime.Now,
+        },
+        new Option {
+          Id = Guid.NewGuid(),
+          Description = "Random Option 2",
+          CreatedAt = DateTime.Now,
+        }
+      }
+    };
+  }
+
+  public List<User> GetUserList() 
+  {
+    var list = new List<User>();
+    list.Add(GetRandomUser());
+    list.Add(GetRandomUser());
+    return list;
+  }
+
+  public User GetRandomUser(Guid id) 
+  {
+    return new User() 
+    {
+      Id = id,
+      Username = "username1",
+      Email = "email1@hotmail.com",
+      Password = "password1@"
+    };
+  }
+
+
+  private User GetRandomUser() 
+  {
+    return new User() 
+    {
+      Id = Guid.NewGuid(),
+      Username = "username1",
+      Email = "email1@hotmail.com",
+      Password = "password1@"
+    };
+  }
 }
 

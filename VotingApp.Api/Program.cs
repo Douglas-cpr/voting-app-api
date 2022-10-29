@@ -5,6 +5,7 @@ using VotingApp.Infra.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IPollRepository, PollInMemRepository>();
+builder.Services.AddSingleton<IUserRepository, UserInMemRepository>();
 builder.Services.AddApplication();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
