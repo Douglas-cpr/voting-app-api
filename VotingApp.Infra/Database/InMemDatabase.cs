@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using VotingApp.Domain.Entities;
 
 namespace VotingApp.Infra.Database;
@@ -46,6 +47,11 @@ public class InMemoryDatabase
     var user = _users.First();
     user.Id = id;
     return user;
+  }
+
+  public void Add(User user) 
+  {
+    _users.Add(user);
   }
 
   private Poll GetRandomPoll() 

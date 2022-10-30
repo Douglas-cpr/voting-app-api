@@ -1,5 +1,4 @@
 using MediatR;
-using VotingApp.Application.Authentication.Register.Commands;
 using VotingApp.Application.Persistence;
 using VotingApp.Application.Services.Authentication.Common;
 using VotingApp.Domain.Entities;

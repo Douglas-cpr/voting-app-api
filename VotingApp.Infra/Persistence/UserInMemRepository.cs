@@ -28,6 +28,7 @@ public class UserInMemRepository : IUserRepository
 
   public Guid Add(User user)
   {
+    _db.Add(user);
     return user.Id;
   }
 

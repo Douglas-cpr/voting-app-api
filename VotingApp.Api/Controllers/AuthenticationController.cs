@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using VotingApp.Application.Authentication.Commands;
-using VotingApp.Application.Authentication.Register.Commands;
+using VotingApp.Application.Authentication.Commands.Authenticate;
+using VotingApp.Application.Authentication.Commands.Register;
 using VotingApp.Contracts.Authentication;
 
 namespace VotingApp.Api.Controllers;
@@ -21,17 +21,30 @@ public class AuthenticationController : ControllerBase
     [HttpPost, Route("register")]
     public async Task<ActionResult> Register(RegisterRequest request) 
     {
-      var command = new RegisterCommand(request.username, request.email, request.password);
-      var registerResult = await _sender.Send(command);
-      return Ok(registerResult);
+      try
+      {
+        var command = new RegisterCommand(request.username, request.email, request.password);
+        var registerResult = await _sender.Send(command);
+        return Ok(registerResult);
+      }
+      catch (Exception e)
+      {
+        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+      }
     }
 
     [HttpPost, Route("authenticate")]
     public async Task<ActionResult> Authenticate(AuthenticateRequest request)
     {
-      var command = new AuthenticateCommand(request.email, request.password);
-      var response = new AuthenticationResponse("username", request.email, Guid.NewGuid());
-      var res = await Task.FromResult(response);
-      return Ok(res);
+      try
+      {
+        var command = new AuthenticateCommand(request.email, request.password);
+        var authenticateResult = await _sender.Send(command);
+        return Ok(authenticateResult);
+      }
+      catch (Exception e)
+      {
+        return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+      }
     }
 }
