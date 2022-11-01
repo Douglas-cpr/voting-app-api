@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VotingApp.Application.Get.Commands;
+using VotingApp.Application.GetActive.Commands;
 using VotingApp.Application.GetById.Commands;
-using VotingApp.Application.Persistence;
 
 namespace VotingApp.Api.Controllers;
 
@@ -34,11 +34,11 @@ public class PollController : ControllerBase
     }
 
     [HttpGet, Route("active")]
-    public ActionResult GetActivePolls() 
+    public async Task<ActionResult> GetActivePolls() 
     {
-        // var polls = _repository.Get();
-        // var activePolls = polls.Where(p => p.IsActive == true);
-        return Ok("");
+        var command = new GetActivePollsCommand();
+        var getActivePollsResult = await _sender.Send(command);
+        return Ok(getActivePollsResult);
     }
 }
 
