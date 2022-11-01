@@ -1,5 +1,3 @@
-using VotingApp.Application.Persistence;
-using VotingApp.Infra.Persistence;
 using BuberDinner.Application;
 using BuberDinner.Infraestructure;
 
@@ -11,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 };
-
 
 
 var app = builder.Build();

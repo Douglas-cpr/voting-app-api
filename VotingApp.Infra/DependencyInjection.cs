@@ -10,6 +10,7 @@ public static class DependencyInjection
     this IServiceCollection services)
   {
     services.AddScoped<IUserRepository, UserInMemRepository>();
+    services.AddScoped<IPollRepository, PollInMemRepository>();
     return services;
   }
 }

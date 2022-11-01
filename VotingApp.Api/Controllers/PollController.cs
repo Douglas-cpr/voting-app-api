@@ -1,4 +1,6 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VotingApp.Application.Get.Commands;
 using VotingApp.Application.Persistence;
 
 namespace VotingApp.Api.Controllers;
@@ -7,18 +9,19 @@ namespace VotingApp.Api.Controllers;
 [Route("poll")]
 public class PollController : ControllerBase
 {
-    private readonly IPollRepository _repository;
+    private readonly ISender _sender;
 
-    public PollController(IPollRepository repository) 
+    public PollController(ISender mediator) 
     {
-        _repository = repository;
+        _sender = mediator;
     }
 
     [HttpGet]
-    public ActionResult Get()
+    public async Task<ActionResult> Get()
     {
-        var polls = _repository.Get(); 
-        return Ok(polls);
+        var command = new GetPollCommand();
+        var getPollResult = await _sender.Send(command);
+        return Ok(getPollResult);
     }
 
     [HttpGet("{id}")]
