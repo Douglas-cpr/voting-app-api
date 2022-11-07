@@ -2,5 +2,5 @@ using MediatR;
 
 namespace VotingApp.Application.GetById.Commands;
 public record GetPollByIdCommand (
-  Guid Id
+  Guid id
 ) : IRequest<GetByIdResult>;

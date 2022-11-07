@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BuberDinner.Application;
+namespace VotingApp.Application;
 
 public static class DependencyInjection
 {

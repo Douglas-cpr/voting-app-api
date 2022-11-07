@@ -1,5 +1,5 @@
-using BuberDinner.Application;
-using BuberDinner.Infraestructure;
+using VotingApp.Application;
+using VotingApp.Infraestructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {

@@ -7,6 +7,7 @@ public class InMemoryDatabase
 {
    private readonly List<Poll> _polls;
    private readonly List<User> _users;
+   private readonly List<Vote> _votes;
 
   public InMemoryDatabase() 
   {
@@ -53,6 +54,11 @@ public class InMemoryDatabase
   public void Add(User user) 
   {
     _users.Add(user);
+  }
+
+  public void Add(Vote vote)
+  {
+    _votes.Add(vote);
   }
 
   private Poll GetRandomPoll() 

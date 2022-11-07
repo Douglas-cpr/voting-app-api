@@ -14,7 +14,7 @@ public class GetPollByIdCommandHandler : IRequestHandler<GetPollByIdCommand, Get
 
   public async Task<GetByIdResult> Handle(GetPollByIdCommand request, CancellationToken cancellationToken)
   {
-    var polls = _pollRepository.Get(request.Id);
+    var polls = _pollRepository.Get(request.id);
     var result = new GetByIdResult(polls);
     return result;
   }

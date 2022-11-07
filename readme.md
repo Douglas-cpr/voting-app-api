@@ -1,6 +1,6 @@
 # Requirements
 
-- [] I can login or register
+- [x] I can login or register
 - [x] I can see list of active polls without login
 - [] I can vote to a poll
 - [] I can subscribe to a poll result so that I get an email when results are out.

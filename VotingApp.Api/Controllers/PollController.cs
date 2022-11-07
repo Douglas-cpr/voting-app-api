@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VotingApp.Application.Commands;
 using VotingApp.Application.Get.Commands;
 using VotingApp.Application.GetActive.Commands;
 using VotingApp.Application.GetById.Commands;
+using VotingApp.Contracts.Poll;
 
 namespace VotingApp.Api.Controllers;
 
@@ -20,25 +22,54 @@ public class PollController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> Get()
     {
-        var command = new GetPollCommand();
-        var getPollResult = await _sender.Send(command);
-        return Ok(getPollResult);
+        try
+        {
+            var command = new GetPollCommand();
+            var getPollResult = await _sender.Send(command);
+            return Ok(getPollResult);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult> Get(Guid id) 
     {
-        var command = new GetPollByIdCommand(id);
-        var getPollByIdResult = await _sender.Send(command);
-        return Ok(getPollByIdResult);
+        try
+        {
+            var command = new GetPollByIdCommand(id);
+            var getPollByIdResult = await _sender.Send(command);
+            return Ok(getPollByIdResult);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
     }
 
     [HttpGet, Route("active")]
     public async Task<ActionResult> GetActivePolls() 
     {
-        var command = new GetActivePollsCommand();
-        var getActivePollsResult = await _sender.Send(command);
-        return Ok(getActivePollsResult);
+        try
+        {
+            var command = new GetActivePollsCommand();
+            var getActivePollsResult = await _sender.Send(command);
+            return Ok(getActivePollsResult);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+
+    [HttpPost, Route("vote")]
+    public async Task<ActionResult> Vote(VoteRequest request)
+    {
+        var command = new VoteCommand(request.pollId, request.optionId, request.userId);
+        var voteResult = await _sender.Send(command);
+        return Ok(voteResult);
     }
 }
 
