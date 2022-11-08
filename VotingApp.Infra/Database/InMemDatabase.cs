@@ -25,6 +25,13 @@ public class InMemoryDatabase
       GetRandomUser(),
       GetRandomUser()
     };
+
+    _votes = new() 
+    {
+      GetRandomVote(),
+      GetRandomVote(),
+      GetRandomVote()
+    };
   }
 
   public List<Poll> GetPollList() 
@@ -61,6 +68,11 @@ public class InMemoryDatabase
     _votes.Add(vote);
   }
 
+  public Vote? Get(Guid userId, Guid pollId)
+  {
+    return _votes.FirstOrDefault(v => v.UserId == userId && v.PollId == pollId);
+  }
+
   private Poll GetRandomPoll() 
   {
     return new Poll() {
@@ -95,6 +107,18 @@ public class InMemoryDatabase
       Username = "username1",
       Email = "email1@hotmail.com",
       Password = "password1@"
+    };
+  }
+
+  private Vote GetRandomVote()
+  {
+    return new Vote()
+    {
+      Id = Guid.NewGuid(),
+      UserId = Guid.NewGuid(),
+      PollId = Guid.NewGuid(),
+      OptionId = Guid.NewGuid(),
+      VoteDate = DateTime.Now
     };
   }
 }

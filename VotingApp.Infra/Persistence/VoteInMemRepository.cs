@@ -18,4 +18,9 @@ public class VoteInMemRepository : IVoteRepository
     _db.Add(vote);
     return vote.Id;
   }
+
+  public Vote? Get(Guid userId, Guid pollId)
+  {
+    return _db.Get(userId, pollId);
+  }
 }
