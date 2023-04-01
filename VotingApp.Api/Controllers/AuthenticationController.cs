@@ -10,7 +10,6 @@ namespace VotingApp.Api.Controllers;
 [Route("authentication")]
 public class AuthenticationController : ControllerBase
 {
-
   private readonly ISender _sender;
 
     public AuthenticationController(ISender mediator) 

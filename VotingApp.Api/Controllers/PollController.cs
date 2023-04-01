@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VotingApp.Application.Commands;
+using VotingApp.Application.Create.Commands;
 using VotingApp.Application.Get.Commands;
 using VotingApp.Application.GetActive.Commands;
 using VotingApp.Application.GetById.Commands;
@@ -27,6 +28,21 @@ public class PollController : ControllerBase
             var command = new GetPollCommand();
             var getPollResult = await _sender.Send(command);
             return Ok(getPollResult);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Post(PostRequest request) 
+    {
+        try
+        {
+            var command = new CreatePollCommand(request.Options, request.User);
+            var postPollResult = _sender.Send(command);
+            return Ok(postPollResult);
         }
         catch (Exception e)
         {
